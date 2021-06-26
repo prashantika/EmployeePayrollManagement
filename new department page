@@ -1,0 +1,111 @@
+import java.sql.*;
+	import javax.swing.*;
+	import java.awt.*;
+	import java.awt.event.*;
+	import static jdk.nashorn.internal.objects.NativeFunction.call;
+	import net.proteanit.sql.DbUtils;
+	public class newdepartment extends JFrame implements ActionListener{
+		
+		JLabel l1,l3;
+		JTextField t1,t3;
+		JButton b1,b2;
+		
+		
+		@SuppressWarnings("OverridableMethodCallInConstructor")
+		newdepartment(){
+			
+			super("New Department");
+		 
+			setSize(450,450);
+			setLocation(400,100);
+			getContentPane().setBackground(Color.WHITE);
+			
+			JPanel p1= new JPanel();
+			p1.setBackground(Color.WHITE);
+		  
+			p1.setLayout(new GridLayout(8,2,10,40));
+			
+		   
+			
+			l1 = new JLabel("did");
+			l1.setBounds(60, 80, 150, 27);
+		   t1 = new JTextField(15);
+			t1.setBounds(60, 80, 150, 27);
+			p1.add(l1);
+			p1.add(t1);
+		   
+		   
+			l3 = new JLabel("Dname");
+			l3.setBounds(60, 80, 150, 27);
+			t3 = new JTextField(15);
+			t3.setBounds(60, 80, 150, 27);
+			p1.add(l3);
+			p1.add(t3);
+			
+			b1 =new JButton("Submit",new ImageIcon(ClassLoader.getSystemResource("icons/EXPENSE.png")));
+			b2 = new JButton("Cancel",new ImageIcon(ClassLoader.getSystemResource("icons/delete.PNG")));
+			p1.add(b1);
+			p1.add(b2);
+		   
+			setLayout(new BorderLayout());
+			ImageIcon c2 = new ImageIcon(ClassLoader.getSystemResource("icons/new.jpg"));
+			Image i1 = c2.getImage().getScaledInstance(130, 200,Image.SCALE_DEFAULT);// to change image dimensions
+			
+			add(new JLabel(new ImageIcon(i1)),BorderLayout.WEST);
+			  
+		   
+			b1.addActionListener(this);
+			b1.setBackground(Color.BLACK);
+			b1.setForeground(Color.WHITE);
+			
+			b2.addActionListener(this);
+			b2.setBackground(Color.BLACK);
+			b2.setForeground(Color.WHITE);
+			
+			add(p1);
+		   
+		   
+		}
+		
+		 //@SuppressWarnings("override")
+		public void actionPerformed(ActionEvent ae){
+		   
+			 if(ae.getSource()==b1){
+			
+				 String d = t3.getText();
+				
+		   
+				try{
+				  
+			   Class.forName("oracle.jdbc.driver.OracleDriver");
+			   Connection c=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","root");
+			  
+			 // call to stored procedure
+			 CallableStatement cstmt = c.prepareCall("{call INSERTDEPT2 (?)}");
+				 cstmt.setString(1,d); 
+				   cstmt.execute(); 
+			  
+				   
+				   
+				   JOptionPane.showMessageDialog(null,"New Department added");
+					this.setVisible(false);  
+				}catch(Exception ee){
+					ee.printStackTrace();
+				}
+
+			 }
+			 if(ae.getSource()==b2){
+				try{
+					JOptionPane.showMessageDialog(null,"canceled");
+					System.exit(0);
+					this.setVisible(false);
+				 }catch(Exception ee){
+					ee.printStackTrace();
+				}
+			 }
+		}
+		public static void main(String s[]){
+		   new newdepartment().setVisible(true);
+		}
+
+	}
