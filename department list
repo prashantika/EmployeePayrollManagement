@@ -1,0 +1,63 @@
+import java.sql.*;
+	import javax.swing.*;
+	import java.awt.*;
+	import java.awt.event.*;
+
+	public class listdepartment extends JFrame implements ActionListener{
+	   JTable j1;
+		JButton b1;
+		String h[]={"did","dname"};
+		String d[][]=new String[15][4];  
+		int i=0,j=0;
+		
+	   // JScrollPane scroll;
+		
+	 //  @SuppressWarnings("OverridableMethodCallInConstructor")
+		listdepartment(){
+			
+			super("list department");
+		   
+		  //  setLayout(new GridLayout(8,2,20,20));
+		   
+			
+			setSize(1000,400);
+			setLocation(200,200);
+			setVisible(true);
+			try{
+				String q="select * from department";
+				conn c1=new conn();
+				ResultSet rs=c1.s.executeQuery(q);
+				while(rs.next()){
+					 d[i][j++]=rs.getString("did");
+					d[i][j++]=rs.getString("dname");
+				   
+					i++;
+					j=0;
+				}
+			
+				j1=new JTable(d,h);
+				
+
+			}catch(Exception e){}
+			
+			// JScrollPane s1=new JScrollPane(j1);
+			// JFrame frame = new JFrame();
+		   getContentPane().add(new JScrollPane(j1),BorderLayout.CENTER);
+			b1=new JButton("Print",new ImageIcon(ClassLoader.getSystemResource("icons/print.PNG")));
+			add(b1,"South");
+		   
+			
+			b1.addActionListener(this);
+		
+		}
+		public void actionPerformed(ActionEvent ae){
+			try{
+				j1.print();
+			}catch(Exception e){}
+		}
+		
+		   public static void main(String[] args){
+			new listdepartment().setVisible(true);
+		}
+
+	}
