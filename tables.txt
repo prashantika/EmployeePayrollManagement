@@ -1,0 +1,28 @@
+tables creation
+
+1. Employee table
+
+create table Employee (Id int primary key,Name varchar (20), Gender varchar (20), Age Integer,
+DOB varchar (20), Address varchar (20), Nationality varchar (20), Depart varchar (20) Foreign Key, 
+Email varchar (20), Phone Integer)
+
+
+2. Login table
+
+create table Login( Username Varchar(20), Password Varchar(20))
+
+
+3. Department table
+
+create table Department( Did Integer, DName varchar(20) Primary Key)
+
+
+4. Salary table
+
+create table Salary(Id	Integer	Foreign Key, HRA Decimal(20,2), DA Decimal(20,2), MED Decimal(20,2),
+PF Decimal(20,2), Basic_ Salary	Varchar(20), Action Varchar(20))
+
+
+5. Attendance table
+
+create table Attendance ( Id Integer Foreign Key, Date Date, F_half Varchar(20), S_half	Varchar(20))
